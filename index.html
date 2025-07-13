@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Malla Psicología Udelar</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .materia {
+      display: inline-block;
+      background: #fff;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 5px;
+      min-width: 180px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .materia.aprobada {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+    }
+    .materia.bloqueada {
+      background: #eee;
+      border-color: #aaa;
+      color: #888;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla de Psicología - Udelar</h1>
+
+  <div id="malla">
+    <!-- Acá irán las materias -->
+    <div class="materia" data-id="fundamentos" data-creditos="10">Fundamentos de la Psicología<br><small>10 créditos</small></div>
+    <div class="materia bloqueada" data-id="teorias" data-creditos="10" data-previas="fundamentos">Teorías Psicológicas<br><small>10 créditos</small></div>
+  </div>
+
+  <p>Total de créditos: <span id="creditos">0</span></p>
+
+  <script>
+    const materias = document.querySelectorAll('.materia');
+    const creditosSpan = document.getElementById('creditos');
+
+    function actualizarCreditos() {
+      let total = 0;
+      materias.forEach(m => {
+        if (m.classList.contains('aprobada')) {
+          total += parseInt(m.dataset.creditos);
+        }
+      });
+      creditosSpan.textContent = total;
+    }
+
+    function actualizarBloqueos() {
+      materias.forEach(m => {
+        const previas = m.dataset.previas ? m.dataset.previas.split(',') : [];
+        const aprobadas = [...document.querySelectorAll('.materia.aprobada')].map(x => x.dataset.id);
+        const desbloqueada = previas.every(p => aprobadas.includes(p));
+        if (!desbloqueada && previas.length > 0 && !m.classList.contains('aprobada')) {
+          m.classList.add('bloqueada');
+        } else {
+          m.classList.remove('bloqueada');
+        }
+      });
+    }
+
+    materias.forEach(materia => {
+      materia.addEventListener('click', () => {
+        if (materia.classList.contains('bloqueada')) return;
+        materia.classList.toggle('aprobada');
+        actualizarCreditos();
+        actualizarBloqueos();
+      });
+    });
+
+    actualizarCreditos();
+    actualizarBloqueos();
+  </script>
+</body>
+</html>
