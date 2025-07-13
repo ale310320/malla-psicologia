@@ -160,28 +160,59 @@
   <p class="creditos">Total de créditos: <span id="creditos">0</span></p>
 
   <script>
-    const materias = document.querySelectorAll('.materia');
-    const creditosSpan = document.getElementById('creditos');
+  <script>
+  const materias = document.querySelectorAll('.materia');
+  const creditosSpan = document.getElementById('creditos');
 
-    function actualizarCreditos() {
-      let total = 0;
-      materias.forEach(m => {
-        if (m.classList.contains('aprobada')) {
-          total += parseInt(m.dataset.creditos);
-        }
-      });
-      creditosSpan.textContent = total;
+  // 🔁 Restaurar progreso desde localStorage
+  const progresoGuardado = JSON.parse(localStorage.getItem('materiasAprobadas')) || [];
+  materias.forEach(m => {
+    if (progresoGuardado.includes(m.dataset.id)) {
+      m.classList.add('aprobada');
     }
+  });
 
-    materias.forEach(materia => {
-      materia.addEventListener('click', () => {
-        if (materia.classList.contains('bloqueada')) return;
-        materia.classList.toggle('aprobada');
-        actualizarCreditos();
-      });
+  function actualizarCreditos() {
+    let total = 0;
+    document.querySelectorAll('.materia.aprobada').forEach(m => {
+      total += parseInt(m.dataset.creditos);
     });
+    creditosSpan.textContent = total;
+  }
 
-    actualizarCreditos();
+  function actualizarBloqueos() {
+    materias.forEach(m => {
+      const previas = m.dataset.previas ? m.dataset.previas.split(',') : [];
+      const aprobadas = [...document.querySelectorAll('.materia.aprobada')].map(el => el.dataset.id);
+      const desbloqueada = previas.every(p => aprobadas.includes(p));
+      if (!desbloqueada && previas.length > 0 && !m.classList.contains('aprobada')) {
+        m.classList.add('bloqueada');
+      } else {
+        m.classList.remove('bloqueada');
+      }
+    });
+  }
+
+  materias.forEach(materia => {
+    materia.addEventListener('click', () => {
+      if (materia.classList.contains('bloqueada')) return;
+      materia.classList.toggle('aprobada');
+      guardarProgreso(); // Guardar al cambiar
+      actualizarCreditos();
+      actualizarBloqueos();
+    });
+  });
+
+  function guardarProgreso() {
+    const aprobadas = [...document.querySelectorAll('.materia.aprobada')].map(el => el.dataset.id);
+    localStorage.setItem('materiasAprobadas', JSON.stringify(aprobadas));
+  }
+
+  // Inicializar
+  actualizarCreditos();
+  actualizarBloqueos();
+</script>
+
   </script>
 </body>
 </html>
