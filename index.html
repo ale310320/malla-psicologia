@@ -159,12 +159,11 @@
 
   <p class="creditos">Total de créditos: <span id="creditos">0</span></p>
 
-  <script>
-  <script>
+<script>
   const materias = document.querySelectorAll('.materia');
   const creditosSpan = document.getElementById('creditos');
 
-  // 🔁 Restaurar progreso desde localStorage
+  // Restaurar progreso desde localStorage
   const progresoGuardado = JSON.parse(localStorage.getItem('materiasAprobadas')) || [];
   materias.forEach(m => {
     if (progresoGuardado.includes(m.dataset.id)) {
@@ -193,27 +192,24 @@
     });
   }
 
-  materias.forEach(materia => {
-    materia.addEventListener('click', () => {
-      if (materia.classList.contains('bloqueada')) return;
-      materia.classList.toggle('aprobada');
-      guardarProgreso(); // Guardar al cambiar
-      actualizarCreditos();
-      actualizarBloqueos();
-    });
-  });
-
   function guardarProgreso() {
     const aprobadas = [...document.querySelectorAll('.materia.aprobada')].map(el => el.dataset.id);
     localStorage.setItem('materiasAprobadas', JSON.stringify(aprobadas));
   }
 
-  // Inicializar
+  materias.forEach(materia => {
+    materia.addEventListener('click', () => {
+      if (materia.classList.contains('bloqueada')) return;
+      materia.classList.toggle('aprobada');
+      guardarProgreso();
+      actualizarCreditos();
+      actualizarBloqueos();
+    });
+  });
+
   actualizarCreditos();
   actualizarBloqueos();
 </script>
-
-  </script>
 </body>
 </html>
 
