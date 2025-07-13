@@ -9,25 +9,46 @@
       background: #f0f0f0;
       padding: 20px;
     }
+
     h1 {
       text-align: center;
     }
+
+    .malla {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); /* 5 columnas para los 5 módulos */
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .modulo {
+      background: #e0e0e0;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .modulo h2 {
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
     .materia {
-      display: inline-block;
       background: #fff;
       border: 2px solid #ccc;
       border-radius: 8px;
       padding: 10px;
-      margin: 5px;
-      min-width: 180px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
+      margin-bottom: 8px;
     }
+
     .materia.aprobada {
       background: #c8e6c9;
       border-color: #2e7d32;
     }
+
     .materia.bloqueada {
       background: #eee;
       border-color: #aaa;
@@ -39,41 +60,44 @@
 <body>
   <h1>Malla de Psicología - Udelar</h1>
 
-  <div id="malla">
-    <!-- Acá irán las materias -->
-<div class="materia" data-id="Historia de la psicologia" data-creditos="10"> 
-    Historia de la psicologia  
-</div>
-  
-    <!-- Esta materia no tiene ninguna previa -->
-<div class="materia" data-id="Neurobiologia de la mente" data-creditos="5">
-  Neurobiologia de la mente
-</div>
+  <div class="malla" id="malla">
+    <!-- Módulo Psicología -->
+    <div class="modulo">
+      <h2>Módulo Psicología</h2>
+      <div class="materia" data-id="Historia de la psicologia" data-creditos="10">Historia de la Psicología</div>
+      <div class="materia" data-id="Neurobiologia de la mente" data-creditos="5">Neurobiología de la Mente</div>
+      <div class="materia" data-id="fundamentos de la psicologia" data-creditos="5">Fundamentos de la Psicología</div>
+    </div>
 
-<div class="materia" data-id="fundamentos de la psicologia" data-creditos="5">
- fundamentos de la psicologia
-</div>
+    <!-- Módulo Metodológico -->
+    <div class="modulo">
+      <h2>Módulo Metodológico</h2>
+      <div class="materia" data-id="Epistemologia" data-creditos="5">Epistemología</div>
+      <div class="materia" data-id="Herramientas para el trabajo intelectual" data-creditos="5">Herramientas para el Trabajo Intelectual</div>
+    </div>
 
-  <!-- Esta materia no tiene ninguna previa -->
+    <!-- Módulo Práctica y Proyecto -->
+    <div class="modulo">
+      <h2>Práctica y Proyecto</h2>
+      <!-- Sin materias en este semestre -->
+    </div>
 
-<div class="materia" data-id="Epistemologia" data-creditos="5">
-  Epistemologia
-</div>
- 
-  <!-- Esta materia no tiene ninguna previa -->
-<div class="materia" data-id="Herramientas para el trabajo intelectual" data-creditos="5">
-Herramientas para el trabajo intelectual
-</div>
+    <!-- Módulo Articulación de Saberes -->
+    <div class="modulo">
+      <h2>Articulación de Saberes</h2>
+      <div class="materia" data-id="Art. de saberes 1: construccion del sujeto y del objeto en Psicologia" data-creditos="5">
+        Art. de Saberes 1
+      </div>
+    </div>
 
-  <!-- Esta materia no tiene ninguna previa -->
-<div class="materia" data-id="Art. de saberes 1: construccion del sujeto y del objeto en Psicologia" data-creditos="5">
-  Art. de saberes 1: construccion del sujeto y del objeto en Psicologia
-</div>
-
-  <!-- Esta materia no tiene ninguna previa -->
-<div class="materia" data-id="Inicio a la formacion en Psicologia" data-creditos="5">
-  Inicio a la formacion en Psicologia
-</div>
+    <!-- Módulo Referencial -->
+    <div class="modulo">
+      <h2>Módulo Referencial</h2>
+      <div class="materia" data-id="Inicio a la formacion en Psicologia" data-creditos="5">
+        Inicio a la Formación en Psicología
+      </div>
+    </div>
+  </div>
 
   <p>Total de créditos: <span id="creditos">0</span></p>
 
